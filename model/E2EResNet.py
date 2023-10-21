@@ -2,7 +2,7 @@ import pytorch_lightning as pl
 import torch
 import torch.nn as nn
 import torchvision.models as models
-
+import datetime
 
 class E2EResNet(pl.LightningModule):
     def __init__(self):
@@ -25,6 +25,27 @@ class E2EResNet(pl.LightningModule):
 
         return loss
 
+    def on_train_epoch_end(self):
+        params = self.state_dict()
+        # to cpu
+        params_cpu = {k: v.cpu() for k, v in params.items()}
+        # save model file
+        self.filename = 'model1021_'
+        current_time = datetime.datetime.now()
+        time_string = current_time.strftime("%H:%M:%S")
+        self.filename += time_string
+        self.filename += f'_epoch{self.current_epoch}.pth'
+        torch.save(params_cpu, self.filename)
+        return None
+
+    def validation_step(self, batch, batch_idx):
+        image, label = batch
+        logits = self.model(image)
+        logits = logits.squeeze(-1)
+        loss = nn.MSELoss()(logits.float(), label.float())
+        self.log('val_loss', loss, on_step=True, prog_bar=True, logger=True)
+
+        return loss
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
 
