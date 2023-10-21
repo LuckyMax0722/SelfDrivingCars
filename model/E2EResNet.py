@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 
-from lib.dataset import SimulatorDataset, image_show
 
 class E2EResNet(pl.LightningModule):
     def __init__(self):
@@ -17,7 +16,17 @@ class E2EResNet(pl.LightningModule):
             nn.Linear(128, 1)
         )
 
-    def forward(self, x):
-        return self.model(x)
+    def training_step(self, batch):
+        image, label = batch
+        logits = self.model(image)
+        logits = logits.squeeze(-1)
+        loss = nn.MSELoss()(logits.float(), label.float())
+        self.log('train_loss', loss, on_step=True, prog_bar=True, logger=True)
 
-    def training_step(self, *args: Any, **kwargs: Any) -> STEP_OUTPUT:
+        return loss
+
+    def configure_optimizers(self):
+        optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
+
+        # scheduler = StepLR(optimizer, step_size=1, gamma=0.9)  # 每个epoch后，学习率乘0.9
+        return [optimizer]

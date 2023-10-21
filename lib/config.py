@@ -13,5 +13,5 @@ CONF.PATH.SIMULATOR_STEERING_ANGLE = os.path.join(CONF.PATH.DATA, "driving_log.c
 
 # Datamodule
 CONF.datamodule = EasyDict()
-CONF.datamodule.batch_size = 5
-CONF.datamodule.train_val_split = 0.9
+CONF.datamodule.batch_size = 1
+CONF.datamodule.train_val_split = 1
