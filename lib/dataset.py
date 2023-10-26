@@ -17,7 +17,7 @@ class SimulatorDataset(Dataset):
     def __getitem__(self, item):
         image_path = self.data.iloc[item, 0]
         image = cv.imread(image_path)
-        steering_angle = self.data.iloc[item, -1]
+        steering_angle = self.data.iloc[item, 3]
 
         if self.transform:
             image = self.transform(image)

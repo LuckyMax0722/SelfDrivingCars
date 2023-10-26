@@ -4,6 +4,8 @@ import torch.nn as nn
 import torchvision.models as models
 import datetime
 
+from lib.config import CONF
+
 class E2EResNet(pl.LightningModule):
     def __init__(self):
         super().__init__()
@@ -16,9 +18,12 @@ class E2EResNet(pl.LightningModule):
             nn.Linear(128, 1)
         )
 
+    def forward(self, x):
+        return self.model(x)
+
     def training_step(self, batch):
         image, label = batch
-        logits = self.model(image)
+        logits = self(image)
         logits = logits.squeeze(-1)
         loss = nn.MSELoss()(logits.float(), label.float())
         self.log('train_loss', loss, on_step=True, prog_bar=True, logger=True)
@@ -30,7 +35,8 @@ class E2EResNet(pl.LightningModule):
         # to cpu
         params_cpu = {k: v.cpu() for k, v in params.items()}
         # save model file
-        self.filename = 'model1021_'
+        self.filename = CONF.PATH.OUTPUT_MODEL
+        self.filename += 'model1026_'
         current_time = datetime.datetime.now()
         time_string = current_time.strftime("%H:%M:%S")
         self.filename += time_string
@@ -40,12 +46,14 @@ class E2EResNet(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         image, label = batch
-        logits = self.model(image)
+        logits = self(image)
         logits = logits.squeeze(-1)
         loss = nn.MSELoss()(logits.float(), label.float())
         self.log('val_loss', loss, on_step=True, prog_bar=True, logger=True)
 
         return loss
+
+
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
 

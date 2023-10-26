@@ -4,11 +4,6 @@ from lib.datamodule import SimulatorDataModule
 from model.E2EResNet import E2EResNet
 
 # prepare dataset and dataloader
-'''
-mydataset = SimulatorDataset()
-image, label = mydataset[0]
-image = image.unsqueeze(0)
-'''
 data = SimulatorDataModule()
 
 model = E2EResNet()
