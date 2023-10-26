@@ -8,14 +8,15 @@ from lib.utils import jpg_to_tensor
 
 class SimulatorDataset(Dataset):
     def __init__(self, driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE, transform=jpg_to_tensor):
-        self.data = pd.read_csv(driving_log, header=None)
+        self.data = pd.read_csv(driving_log)
         self.transform = transform
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, item):
-        image_path = self.data.iloc[item, 0]
+        pre_path = '/home/jiachen/SelfDrivingCars/data/'
+        image_path = pre_path + self.data.iloc[item, 0]
         image = cv.imread(image_path)
         steering_angle = self.data.iloc[item, 3]
 
