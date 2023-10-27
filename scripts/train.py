@@ -11,7 +11,7 @@ model = E2EResNet()
 # start training
 trainer = pl.Trainer(accelerator='gpu',
                      devices=1,
-                     max_epochs=20,
+                     max_epochs=1,
                      log_every_n_steps=10,
                      )
 
