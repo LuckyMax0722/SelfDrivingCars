@@ -8,6 +8,7 @@ This program is part of the Masterpraktikum - Simulation-Based Autonomous Drivin
 ### Result
 
 As you can see from the GIF below, the Resnet50-based self-driving model has been able to keep the car on the track for some distance, however the car eventually veers off the track.
+<p align="center"><img src="demo/gif.gif" width="500px"/></p>
 
 ### Installation
 1. Environment requirements
@@ -41,8 +42,7 @@ pip install -r requirements.txt
   * [Windows 64 bit](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f3a4_simulator-windows-64/simulator-windows-64.zip)
   * [Linux](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f0f7_simulator-linux/simulator-linux.zip)
 
-<p align="center"><img src="demo/Simulator.png" width="600px"/></p>
-![image](https://github.com/LuckyMax0722/End-to-End-Learning-for-Self-Driving-Cars/blob/master/demo/Simulator.png)
+<p align="center"><img src="demo/Simulator.png" width="500px"/></p>
 
 ### Data Preparation
 * You can either collect data manually using the training mode in the simulator
