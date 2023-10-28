@@ -1,5 +1,6 @@
 import torchvision.transforms as transforms
 import pandas as pd
+import os
 
 from lib.config import CONF
 
@@ -11,8 +12,11 @@ def data_pre_processing(driving_log):
 
         center_images = data['center'].tolist()
         left_images = data['left'].tolist()
+        left_images = [s[1:] for s in left_images]
         right_images = data['right'].tolist()
+        right_images = [s[1:] for s in right_images]
         combined_images = center_images + left_images + right_images
+        combined_images = [os.path.join(CONF.PATH.DATA, image_path) for image_path in combined_images]
 
         steering_angles_center = data['steering'].tolist()
         steering_angles_left = data['steering'].tolist()
@@ -26,7 +30,9 @@ def data_pre_processing(driving_log):
 
         center_images = data[0].tolist()
         left_images = data[1].tolist()
+        left_images = [s[1:] for s in left_images]
         right_images = data[2].tolist()
+        right_images = [s[1:] for s in right_images]
         combined_images = center_images + left_images + right_images
 
         steering_angles_center = data[3].tolist()

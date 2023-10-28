@@ -18,5 +18,5 @@ CONF.data.source = 'Download'  # 'Download', 'Simulator'  # TODO: change this
 
 # Datamodule
 CONF.datamodule = EasyDict()
-CONF.datamodule.batch_size = 16
+CONF.datamodule.batch_size = 32
 CONF.datamodule.train_val_split = 0.9

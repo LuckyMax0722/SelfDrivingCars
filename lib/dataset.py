@@ -18,14 +18,7 @@ class SimulatorDataset(Dataset):
             print("Dataset error")
 
     def __getitem__(self, item):
-        if CONF.data.source == 'Download':
-            image_path = os.path.join(CONF.PATH.DATA, self.images[item])
-            print(self.images[item])
-        elif CONF.data.source == 'Simulator':
-            image_path = self.images[item]
-        else:
-            print("Data source input error, please check the configuration file")
-
+        image_path = self.images[item]
         image = cv.imread(image_path)
         steering_angle = self.steering_angles[item]
 

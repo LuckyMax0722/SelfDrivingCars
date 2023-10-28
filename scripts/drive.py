@@ -63,7 +63,7 @@ def send_control(steering_angle, throttle, speed):
 
 if __name__ == '__main__':
     model = E2EResNet()  # 替换为你的模型类
-    model.load_state_dict(torch.load('/home/jiachen/SelfDrivingCars/output/model/model1026_18:37:39_epoch19.pth'))
+    model.load_state_dict(torch.load('/home/jiachen/SelfDrivingCars/output/model/model1026_19:23:26_epoch9.pth'))
     model.eval()
 
     application = socketio.Middleware(sio, application)
