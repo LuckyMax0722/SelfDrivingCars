@@ -2,12 +2,12 @@ import socketio
 import eventlet.wsgi
 import base64
 import torch
-import time
+
 
 from io import BytesIO
 from PIL import Image
 from flask import Flask
-
+from lib.config import CONF
 from lib.utils import jpg_to_tensor
 from model.E2EResNet import E2EResNet
 
@@ -63,7 +63,7 @@ def send_control(steering_angle, throttle, speed):
 
 if __name__ == '__main__':
     model = E2EResNet()  # 替换为你的模型类
-    model.load_state_dict(torch.load('/home/jiachen/SelfDrivingCars/output/model/model1026_19:23:26_epoch9.pth'))
+    model.load_state_dict(torch.load(CONF.model.best_model))
     model.eval()
 
     application = socketio.Middleware(sio, application)

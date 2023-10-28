@@ -20,3 +20,7 @@ CONF.data.source = 'Download'  # 'Download', 'Simulator'  # TODO: change this
 CONF.datamodule = EasyDict()
 CONF.datamodule.batch_size = 32
 CONF.datamodule.train_val_split = 0.9
+
+# Best Model
+CONF.model = EasyDict()
+CONF.model.best_model = '/home/jiachen/SelfDrivingCars/output/model/model_Resnet50.pth'  # TODO: change this
