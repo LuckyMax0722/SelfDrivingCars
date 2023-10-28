@@ -41,7 +41,7 @@ pip install -r requirements.txt
   * [Windows 64 bit](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f3a4_simulator-windows-64/simulator-windows-64.zip)
   * [Linux](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f0f7_simulator-linux/simulator-linux.zip)
 
-[image](https://github.com/LuckyMax0722/End-to-End-Learning-for-Self-Driving-Cars/blob/master/demo/Simulator.png)
+![image](https://github.com/LuckyMax0722/End-to-End-Learning-for-Self-Driving-Cars/blob/master/demo/Simulator.png)
 
 ### Data Preparation
 * You can either collect data manually using the training mode in the simulator
