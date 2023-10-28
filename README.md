@@ -68,7 +68,7 @@ python train.py
 Of course, you can also change the relevant configuration for customized training.
 
 ### Testing
-Before you test the model, make sure the project path has been reset (see Section [Training](https://github.com/LuckyMax0722/SoftCap/tree/master#training)).
+Before you test the model, make sure the project path has been reset (see Section [Training](https://github.com/LuckyMax0722/End_to_End_Learning_for_Self_Driving_Cars#training)).
 ```shell
 cd scripts
 python drive.py
