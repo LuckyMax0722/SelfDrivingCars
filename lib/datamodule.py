@@ -20,7 +20,7 @@ class SimulatorDataModule(pl.LightningDataModule):
     def setup(self, stage=None):
         dataset = SimulatorDataset(self.driving_log, transform=self.transform)
         num_samples = len(dataset)
-        num_train = int(self.train_val_split * num_samples)
+        num_train = int(self.train_val_split * num_samples)  # split training and validation data
         num_val = num_samples - num_train
         print(f"Training samples: {num_train}  Validation samples: {num_val}")
         self.train_dataset, self.val_dataset = random_split(dataset, [num_train, num_val])

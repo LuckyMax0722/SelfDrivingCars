@@ -7,6 +7,7 @@ from lib.config import CONF
 
 def data_pre_processing(driving_log):
     # data_pre_processing
+    # use all three cameras' photoes as the input
     if CONF.data.source == 'Download':
         data = pd.read_csv(driving_log)
 
@@ -46,6 +47,7 @@ def data_pre_processing(driving_log):
         print("Data source input error, please check the configuration file")
 
     return combined_images, combined_steering_angles
+
 
 def jpg_to_tensor(image):
     transf = transforms.ToTensor()

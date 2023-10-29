@@ -10,6 +10,7 @@ class E2EResNet(pl.LightningModule):
     def __init__(self):
         super().__init__()
         self.model = models.resnet50(pretrained=False)
+        #  change the last output FC layer
         self.model.fc = nn.Sequential(
             nn.Linear(2048, 512),
             nn.ReLU(),
@@ -25,18 +26,18 @@ class E2EResNet(pl.LightningModule):
         image, label = batch
         logits = self(image)
         logits = logits.squeeze(-1)
-        loss = nn.MSELoss()(logits.float(), label.float())
+        loss = nn.MSELoss()(logits.float(), label.float())  # use L2 loss
         self.log('train_loss', loss, on_step=True, prog_bar=True, logger=True)
 
         return loss
 
-    def on_train_epoch_end(self):
+    def on_train_epoch_end(self):  # save the model
         params = self.state_dict()
         # to cpu
         params_cpu = {k: v.cpu() for k, v in params.items()}
         # save model file
         self.filename = CONF.PATH.OUTPUT_MODEL
-        self.filename += 'model1026_'
+        self.filename += 'model_'
         current_time = datetime.datetime.now()
         time_string = current_time.strftime("%H:%M:%S")
         self.filename += time_string

@@ -22,7 +22,7 @@ class SimulatorDataset(Dataset):
         steering_angle = self.steering_angles[item]
 
         if self.transform:
-            image = self.transform(image)
+            image = self.transform(image)  # jpg to tensor
 
         return image, steering_angle
 

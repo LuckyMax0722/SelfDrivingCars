@@ -3,7 +3,6 @@ import eventlet.wsgi
 import base64
 import torch
 
-
 from io import BytesIO
 from PIL import Image
 from flask import Flask
@@ -14,15 +13,9 @@ from model.E2EResNet import E2EResNet
 sio = socketio.Server()
 application = Flask(__name__)
 
-#Speed limits
-max_speed = 30
-min_speed = 10
-
-speed_limit = max_speed
 
 @sio.on('telemetry')
 def telemetry(sid, data):
-
     if data:
         steering_angle = float(data["steering_angle"])
         throttle = float(data["throttle"])
@@ -33,7 +26,7 @@ def telemetry(sid, data):
         image_tensor = image_tensor.unsqueeze(0)
 
         try:
-            steering_angle = float(model(image_tensor))
+            steering_angle = float(model(image_tensor))  # predict the steering angel based on input image
 
             throttle = 0.1
             speed = 20
@@ -50,7 +43,7 @@ def telemetry(sid, data):
 @sio.on('connect')
 def connect(sid, environ):
     print("connect ", sid)
-    send_control(0.0, 0.0, 5)
+    send_control(0.0, 0.0, 5)  # init
 
 
 def send_control(steering_angle, throttle, speed):
@@ -62,9 +55,11 @@ def send_control(steering_angle, throttle, speed):
 
 
 if __name__ == '__main__':
-    model = E2EResNet()  # 替换为你的模型类
+    # load model
+    model = E2EResNet()
     model.load_state_dict(torch.load(CONF.model.best_model))
     model.eval()
 
+    # connect to simulator
     application = socketio.Middleware(sio, application)
     eventlet.wsgi.server(eventlet.listen(('', 4567)), application)
