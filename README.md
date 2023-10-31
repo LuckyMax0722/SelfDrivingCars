@@ -26,7 +26,7 @@ conda activate SDC
 
 2. Clone the repository.
 ```
-git clone https://github.com/avavavsf/End-to-End-Learning-for-Self-Driving-Cars.git
+git clone https://github.com/LuckyMax0722/SelfDrivingCars.git
 ```
 
 3. Install the dependencies.

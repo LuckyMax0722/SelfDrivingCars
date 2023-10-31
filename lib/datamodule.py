@@ -26,11 +26,10 @@ class SimulatorDataModule(pl.LightningDataModule):
         self.train_dataset, self.val_dataset = random_split(dataset, [num_train, num_val])
 
     def train_dataloader(self):
-        print("train data: ", len(self.train_dataset))
         return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
 
     def val_dataloader(self):
-        return DataLoader(self.val_dataset, batch_size=self.batch_size)
+        return DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=True)
 
 
 data_module = SimulatorDataModule(driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE,

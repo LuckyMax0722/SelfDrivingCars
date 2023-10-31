@@ -11,10 +11,11 @@ model = E2EResNet()
 # start training
 trainer = pl.Trainer(accelerator='gpu',
                      devices=1,
-                     max_epochs=10,
+                     max_epochs=5,
                      log_every_n_steps=10,
                      )
 
 trainer.fit(model, data)
 
 # tensorboard --logdir=/home/jiachen/SelfDrivingCars/scripts/lightning_logs
+# watch -n 0.5 -d nvidia-smi

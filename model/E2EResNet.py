@@ -6,10 +6,11 @@ import datetime
 
 from lib.config import CONF
 
+
 class E2EResNet(pl.LightningModule):
     def __init__(self):
         super().__init__()
-        self.model = models.resnet50(pretrained=False)
+        self.model = models.resnet50(pretrained=True)
         #  change the last output FC layer
         self.model.fc = nn.Sequential(
             nn.Linear(2048, 512),
@@ -53,7 +54,6 @@ class E2EResNet(pl.LightningModule):
         self.log('val_loss', loss, on_step=True, prog_bar=True, logger=True)
 
         return loss
-
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
