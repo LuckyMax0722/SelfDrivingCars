@@ -88,7 +88,7 @@ def data_augmentation_translate(images, steering_angles):
     high_x_range = CONF.data_augmentation_translate.high_x_range
     low_y_range = CONF.data_augmentation_translate.low_y_range
     high_y_range = CONF.data_augmentation_translate.high_y_range
-    #delta_steering_angle_per_px = CONF.data_augmentation_translate.delta_steering_angle_per_px  # steering angle adjust
+    delta_steering_angle_per_px = CONF.data_augmentation_translate.delta_steering_angle_per_px  # steering angle adjust
     rows, cols = (CONF.data.image_size_rows, CONF.data.image_size_cols)
 
     for idx in range(len(images)):
@@ -104,8 +104,8 @@ def data_augmentation_translate(images, steering_angles):
         translation_y = np.random.randint(low_y_range, high_y_range)
 
         # adjust steering angle
-        #steering_angle_adjust = steering_angles[idx] + translation_x * delta_steering_angle_per_px
-        #adjust_steering_angles.append(steering_angle_adjust)
+        steering_angle_adjust = steering_angles[idx] + translation_x * delta_steering_angle_per_px
+        adjust_steering_angles.append(steering_angle_adjust)
 
         # translate matrix
         translate_matrix = np.float32([[1, 0, translation_x], [0, 1, translation_y]])
@@ -116,7 +116,7 @@ def data_augmentation_translate(images, steering_angles):
         cv.imwrite(image_path, translated_image)
 
     images = images + translate_images_path
-    steering_angles = steering_angles + steering_angles
+    steering_angles = steering_angles + adjust_steering_angles
 
     return images, steering_angles
 

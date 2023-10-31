@@ -10,7 +10,7 @@ from lib.config import CONF
 class E2EResNet(pl.LightningModule):
     def __init__(self):
         super().__init__()
-        self.model = models.resnet50(pretrained=True)
+        self.model = models.resnet50(pretrained=False)
         #  change the last output FC layer
         self.model.fc = nn.Sequential(
             nn.Linear(2048, 512),

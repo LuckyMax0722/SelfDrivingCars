@@ -2,16 +2,21 @@ import pytorch_lightning as pl
 from lib.dataset import SimulatorDataset, image_show
 from lib.datamodule import SimulatorDataModule
 from model.E2EResNet import E2EResNet
+import torch
 
 # prepare dataset and dataloader
 data = SimulatorDataModule()
 
 model = E2EResNet()
 
+# Load pretrained model
+file = '/home/jiachen/SelfDrivingCars/output/model/model_22:13:51_epoch9.pth'
+model.load_state_dict(torch.load(file), strict=True)
+
 # start training
 trainer = pl.Trainer(accelerator='gpu',
                      devices=1,
-                     max_epochs=5,
+                     max_epochs=10,
                      log_every_n_steps=10,
                      )
 

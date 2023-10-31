@@ -16,7 +16,7 @@ CONF.PATH.DATA_IMAGE_AUGMENTATION = os.path.join(CONF.PATH.DATA, "IMG_A")
 
 # Dataset
 CONF.data = EasyDict()
-CONF.data.source = 'Download'  # 'Download', 'Simulator'  # TODO: change this
+CONF.data.source = 'Simulator'  # 'Download', 'Simulator'  # TODO: change this
 CONF.data.image_size_rows = 160
 CONF.data.image_size_cols = 320
 
@@ -26,13 +26,13 @@ CONF.data_augmentation_translate.low_x_range = -60
 CONF.data_augmentation_translate.high_x_range = 61
 CONF.data_augmentation_translate.low_y_range = -20
 CONF.data_augmentation_translate.high_y_range = 21
-CONF.data_augmentation_translate.delta_steering_angle_per_px = 0.35 / 100
+CONF.data_augmentation_translate.delta_steering_angle_per_px = 0.25 / 100
 
 # Datamodule
 CONF.datamodule = EasyDict()
-CONF.datamodule.batch_size = 48
+CONF.datamodule.batch_size = 40
 CONF.datamodule.train_val_split = 0.9
 
 # Best Model
 CONF.model = EasyDict()
-CONF.model.best_model = '/home/jiachen/SelfDrivingCars/output/model/model_18:10:35_epoch4.pth'  # TODO: change this
+CONF.model.best_model = '/home/jiachen/SelfDrivingCars/output/model/model_23:49:58_epoch3.pth'  # TODO: change this
