@@ -8,8 +8,8 @@ from lib.utils import jpg_to_tensor, data_pre_processing, data_augmentation_flip
 class SimulatorDataset(Dataset):
     def __init__(self, driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE, transform=jpg_to_tensor):
         self.images, self.steering_angles = data_pre_processing(driving_log)
-        self.images, self.steering_angles = data_augmentation_flip(self.images, self.steering_angles)
-        self.images, self.steering_angles = data_augmentation_translate(self.images, self.steering_angles)
+        #self.images, self.steering_angles = data_augmentation_flip(self.images, self.steering_angles)
+        #self.images, self.steering_angles = data_augmentation_translate(self.images, self.steering_angles)
 
         self.transform = transform
 

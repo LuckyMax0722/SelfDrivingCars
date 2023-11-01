@@ -43,7 +43,7 @@ def telemetry(sid, data):
 @sio.on('connect')
 def connect(sid, environ):
     print("connect ", sid)
-    send_control(0.0, 0.0, 5)  # init
+    send_control(0.0, 0, 5)  # init
 
 
 def send_control(steering_angle, throttle, speed):
