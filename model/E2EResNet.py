@@ -10,7 +10,7 @@ from lib.config import CONF
 class E2EResNet(pl.LightningModule):
     def __init__(self):
         super().__init__()
-        self.model = models.resnet50(pretrained=False)
+        self.model = models.resnet50(pretrained=True)
         #  change the last output FC layer
         self.model.fc = nn.Sequential(
             nn.Linear(2048, 512),
@@ -38,7 +38,7 @@ class E2EResNet(pl.LightningModule):
         params_cpu = {k: v.cpu() for k, v in params.items()}
         # save model file
         self.filename = CONF.PATH.OUTPUT_MODEL
-        self.filename += 'model_'
+        self.filename += 'model_1105_'
         current_time = datetime.datetime.now()
         time_string = current_time.strftime("%H:%M:%S")
         self.filename += time_string

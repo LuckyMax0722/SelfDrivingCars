@@ -48,6 +48,8 @@ def data_pre_processing(driving_log):
     else:
         print("Data source input error, please check the configuration file")
 
+    print('Finish loading images')
+
     return combined_images, combined_steering_angles
 
 
@@ -72,6 +74,8 @@ def data_augmentation_flip(images, steering_angles):
 
     flip_steering_angles = [-x for x in steering_angles]  # inverse steering angles
     steering_angles = steering_angles + flip_steering_angles
+
+    print('Finish flipping images')
 
     return images, steering_angles
 
@@ -118,8 +122,112 @@ def data_augmentation_translate(images, steering_angles):
     images = images + translate_images_path
     steering_angles = steering_angles + adjust_steering_angles
 
+    print('Finish translate images')
+
     return images, steering_angles
 
+def data_augmentation_brightness(images, steering_angles):
+    brightness_images_path = []
+
+    if not os.path.exists(CONF.PATH.DATA_IMAGE_AUGMENTATION):  # create argumentation directory
+        os.makedirs(CONF.PATH.DATA_IMAGE_AUGMENTATION)
+
+    for idx in range(len(images)):
+        image_name = os.path.basename(images[idx])  # get image name
+        image_name = 'brightness_' + image_name
+
+        image = cv.imread(images[idx])
+        brightness_factor = np.random.uniform(0.3, 1.6)
+        brightness_image = cv.convertScaleAbs(image, alpha=brightness_factor, beta=0)
+
+        image_path = os.path.join(CONF.PATH.DATA_IMAGE_AUGMENTATION, image_name)
+        brightness_images_path.append(image_path)
+
+        cv.imwrite(image_path, brightness_image)
+
+    images = images + brightness_images_path
+    steering_angles = steering_angles + steering_angles
+
+    print('Finish brightness images')
+
+    return images, steering_angles
+
+def data_augmentation_random_shadow(images, steering_angles):
+    shadow_images_path = []
+
+    cols, rows = (CONF.data.image_size_rows, CONF.data.image_size_cols)
+    w_low, w_high = (CONF.data_augmentation_random_shadow.w_low, CONF.data_augmentation_random_shadow.w_high)
+
+    if not os.path.exists(CONF.PATH.DATA_IMAGE_AUGMENTATION):  # create argumentation directory
+        os.makedirs(CONF.PATH.DATA_IMAGE_AUGMENTATION)
+
+    for idx in range(len(images)):
+        top_y = np.random.random_sample() * rows
+        bottom_y = np.random.random_sample() * rows
+
+        bottom_y_right = bottom_y + np.random.random_sample() * (rows - bottom_y)
+        top_y_right = top_y + np.random.random_sample() * (rows - top_y)
+
+        if np.random.random_sample() <= 0.5:
+            bottom_y_right = bottom_y - np.random.random_sample() * bottom_y
+            top_y_right = top_y - np.random.random_sample() * top_y
+        poly = np.asarray([[[top_y, 0], [bottom_y, cols], [bottom_y_right, cols], [top_y_right, 0]]], dtype=np.int32)
+
+        mask_weight = np.random.uniform(w_low, w_high)
+        origin_weight = 1 - mask_weight
+        
+        image_name = os.path.basename(images[idx])  # get image name
+        image_name = 'shadow_' + image_name
+
+        image = cv.imread(images[idx])
+
+        image_path = os.path.join(CONF.PATH.DATA_IMAGE_AUGMENTATION, image_name)
+        shadow_images_path.append(image_path)
+
+        mask = np.copy(image).astype(np.int32)
+        cv.fillPoly(mask, poly, (0, 0, 0))
+        # masked_image = cv2.bitwise_and(img, mask)
+        shadow_image = cv.addWeighted(image.astype(np.int32), origin_weight, mask, mask_weight, 0).astype(np.uint8)
+
+        cv.imwrite(image_path, shadow_image)
+
+    images = images + shadow_images_path
+    steering_angles = steering_angles + steering_angles
+
+    print('Finish shadow images')
+
+    return images, steering_angles
+
+def data_augmentation_random_erasing(images, steering_angles):
+    erasing_images_path = []
+
+    if not os.path.exists(CONF.PATH.DATA_IMAGE_AUGMENTATION):  # create argumentation directory
+        os.makedirs(CONF.PATH.DATA_IMAGE_AUGMENTATION)
+
+    for idx in range(len(images)):
+        image_name = os.path.basename(images[idx])  # get image name
+        image_name = 'erasing_' + image_name
+
+        transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.RandomErasing(p=1, scale=(0, 0.4), ratio=(0.5, 2.5), value=0, inplace=False),
+            transforms.ToPILImage()
+        ])
+
+        image = cv.imread(images[idx])
+        erasing_image = transform(image)
+
+        image_path = os.path.join(CONF.PATH.DATA_IMAGE_AUGMENTATION, image_name)
+        erasing_images_path.append(image_path)
+
+        erasing_image.save(image_path)
+
+    images = images + erasing_images_path
+    steering_angles = steering_angles + steering_angles
+
+    print('Finish random earsing images')
+
+    return images, steering_angles
 
 def jpg_to_tensor(image):
     transf = transforms.ToTensor()

@@ -5,7 +5,7 @@ import torchvision.models as models
 class E2EResNet(nn.Module):
     def __init__(self):
         super().__init__()
-        self.model = models.resnet50(pretrained=False)
+        self.model = models.resnet50(pretrained=True)
         #  change the last output FC layer
         self.model.fc = nn.Sequential(
             nn.Linear(2048, 512),
