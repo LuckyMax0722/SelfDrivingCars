@@ -5,7 +5,7 @@ CONF = EasyDict()
 
 # Main Path
 CONF.PATH = EasyDict()
-CONF.PATH.BASE = '/data/tumdriving/SelfDrivingCars'  # TODO: change this
+CONF.PATH.BASE = '/home/jiachen/SelfDrivingCars'  # TODO: change this
 CONF.PATH.DATA = os.path.join(CONF.PATH.BASE, 'data')
 CONF.PATH.DATA_VAL = os.path.join(CONF.PATH.BASE, 'data_val')
 CONF.PATH.OUTPUT_MODEL = os.path.join(CONF.PATH.BASE, 'output/model/')
@@ -13,6 +13,7 @@ CONF.PATH.OUTPUT_MODEL = os.path.join(CONF.PATH.BASE, 'output/model/')
 # Simulator Data
 CONF.PATH.SIMULATOR_STEERING_ANGLE = os.path.join(CONF.PATH.DATA, "driving_log.csv")
 CONF.PATH.SIMULATOR_STEERING_ANGLE_VAL = os.path.join(CONF.PATH.DATA_VAL, "driving_log.csv")
+CONF.PATH.SIMULATOR_STEERING_ANGLE_ARGUMENT = os.path.join(CONF.PATH.DATA, "driving_log_a.csv")
 
 CONF.PATH.DATA_IMAGE = os.path.join(CONF.PATH.DATA, "IMG")
 CONF.PATH.DATA_IMAGE_AUGMENTATION = os.path.join(CONF.PATH.DATA, "IMG_A")

@@ -9,44 +9,22 @@ from lib.config import CONF
 
 def data_pre_processing(driving_log):
     # data_pre_processing
-    # use all three cameras' photoes as the input
-    if CONF.data.source == 'Download':
-        data = pd.read_csv(driving_log)
+    # use all three cameras' photos as the input
+    data = pd.read_csv(driving_log, header=None)
 
-        center_images = data['center'].tolist()
-        left_images = data['left'].tolist()
-        left_images = [s[1:] for s in left_images]
-        right_images = data['right'].tolist()
-        right_images = [s[1:] for s in right_images]
-        combined_images = center_images + left_images + right_images
-        combined_images = [os.path.join(CONF.PATH.DATA, image_path) for image_path in combined_images]
+    center_images = data[0].tolist()
+    left_images = data[1].tolist()
+    left_images = [s[1:] for s in left_images]
+    right_images = data[2].tolist()
+    right_images = [s[1:] for s in right_images]
+    combined_images = center_images + left_images + right_images
 
-        steering_angles_center = data['steering'].tolist()
-        steering_angles_left = data['steering'].tolist()
-        steering_angles_right = data['steering'].tolist()
-        steering_angles_left = [steering_angle_left + 0.25 for steering_angle_left in steering_angles_left]
-        steering_angles_right = [steering_angle_right - 0.25 for steering_angle_right in steering_angles_right]
-        combined_steering_angles = steering_angles_center + steering_angles_left + steering_angles_right
-
-    elif CONF.data.source == 'Simulator':
-        data = pd.read_csv(driving_log, header=None)
-
-        center_images = data[0].tolist()
-        left_images = data[1].tolist()
-        left_images = [s[1:] for s in left_images]
-        right_images = data[2].tolist()
-        right_images = [s[1:] for s in right_images]
-        combined_images = center_images + left_images + right_images
-
-        steering_angles_center = data[3].tolist()
-        steering_angles_left = data[3].tolist()
-        steering_angles_right = data[3].tolist()
-        steering_angles_left = [steering_angle_left + 0.25 for steering_angle_left in steering_angles_left]
-        steering_angles_right = [steering_angle_right - 0.25 for steering_angle_right in steering_angles_right]
-        combined_steering_angles = steering_angles_center + steering_angles_left + steering_angles_right
-
-    else:
-        print("Data source input error, please check the configuration file")
+    steering_angles_center = data[3].tolist()
+    steering_angles_left = data[3].tolist()
+    steering_angles_right = data[3].tolist()
+    steering_angles_left = [steering_angle_left + 0.25 for steering_angle_left in steering_angles_left]
+    steering_angles_right = [steering_angle_right - 0.25 for steering_angle_right in steering_angles_right]
+    combined_steering_angles = steering_angles_center + steering_angles_left + steering_angles_right
 
     print('Finish loading images')
 
@@ -75,9 +53,7 @@ def data_augmentation_flip(images, steering_angles):
     flip_steering_angles = [-x for x in steering_angles]  # inverse steering angles
     steering_angles = steering_angles + flip_steering_angles
 
-    print('Finish flipping images')
-
-    return images, steering_angles
+    return images, steering_angles, flip_images_path, flip_steering_angles
 
 
 def data_augmentation_translate(images, steering_angles):
@@ -122,9 +98,8 @@ def data_augmentation_translate(images, steering_angles):
     images = images + translate_images_path
     steering_angles = steering_angles + adjust_steering_angles
 
-    print('Finish translate images')
+    return images, steering_angles, translate_images_path, adjust_steering_angles
 
-    return images, steering_angles
 
 def data_augmentation_brightness(images, steering_angles):
     brightness_images_path = []
@@ -146,11 +121,11 @@ def data_augmentation_brightness(images, steering_angles):
         cv.imwrite(image_path, brightness_image)
 
     images = images + brightness_images_path
+    steering_angles_temp = steering_angles
     steering_angles = steering_angles + steering_angles
 
-    print('Finish brightness images')
+    return images, steering_angles, brightness_images_path, steering_angles_temp
 
-    return images, steering_angles
 
 def data_augmentation_random_shadow(images, steering_angles):
     shadow_images_path = []
@@ -175,7 +150,7 @@ def data_augmentation_random_shadow(images, steering_angles):
 
         mask_weight = np.random.uniform(w_low, w_high)
         origin_weight = 1 - mask_weight
-        
+
         image_name = os.path.basename(images[idx])  # get image name
         image_name = 'shadow_' + image_name
 
@@ -197,6 +172,7 @@ def data_augmentation_random_shadow(images, steering_angles):
     print('Finish shadow images')
 
     return images, steering_angles
+
 
 def data_augmentation_random_erasing(images, steering_angles):
     erasing_images_path = []
@@ -228,6 +204,7 @@ def data_augmentation_random_erasing(images, steering_angles):
     print('Finish random earsing images')
 
     return images, steering_angles
+
 
 def jpg_to_tensor(image):
     transf = transforms.ToTensor()
