@@ -2,18 +2,11 @@ import cv2 as cv
 
 from torch.utils.data import Dataset
 from lib.config import CONF
-from lib.utils import jpg_to_tensor, data_pre_processing, data_augmentation_flip, data_augmentation_translate, data_augmentation_brightness, data_augmentation_random_shadow
-from lib.utils import data_augmentation_random_erasing
+from lib.utils import jpg_to_tensor, data_pre_processing, argument_data_pre_processing
 
 class SimulatorDataset(Dataset):
-    def __init__(self, driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE, transform=jpg_to_tensor):
-        self.images, self.steering_angles = data_pre_processing(driving_log)
-        self.images, self.steering_angles = data_augmentation_random_erasing(self.images, self.steering_angles)
-        self.images, self.steering_angles = data_augmentation_flip(self.images, self.steering_angles)
-        self.images, self.steering_angles = data_augmentation_translate(self.images, self.steering_angles)
-        self.images, self.steering_angles = data_augmentation_brightness(self.images, self.steering_angles)
-        self.images, self.steering_angles = data_augmentation_random_shadow(self.images, self.steering_angles)
-
+    def __init__(self, argument_driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE_ARGUMENT, transform=jpg_to_tensor):
+        self.images, self.steering_angles = argument_data_pre_processing(argument_driving_log)
         self.transform = transform
 
     def __len__(self):

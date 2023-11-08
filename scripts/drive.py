@@ -31,8 +31,12 @@ def telemetry(sid, data):
         try:
             steering_angle = float(model(image_tensor))  # predict the steering angel based on input image
 
-            throttle = 0.1
-            speed = 10
+            if abs(steering_angle) > 0.06:
+                throttle = 0.05
+                speed = 8
+            else:
+                throttle = 0.10
+                speed = 15
 
             print('{} {} {}'.format(steering_angle, throttle, speed))
             send_control(steering_angle, throttle, speed)

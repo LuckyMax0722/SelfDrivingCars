@@ -14,13 +14,13 @@ data = SimulatorDataModule()
 model = E2EResNet()
 
 # Load pretrained model
-file = CONF.model.best_model
-model.load_state_dict(torch.load(file), strict=True)
+#file = CONF.model.best_model
+#model.load_state_dict(torch.load(file), strict=True)
 
 # start training
 trainer = pl.Trainer(accelerator='gpu',
-                     devices=[3],
-                     max_epochs=10,
+                     devices=1,
+                     max_epochs=1,
                      log_every_n_steps=10,
                      )
 

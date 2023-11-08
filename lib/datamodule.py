@@ -7,14 +7,14 @@ from lib.utils import jpg_to_tensor
 
 
 class SimulatorDataModule(pl.LightningDataModule):
-    def __init__(self, driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE,
+    def __init__(self,argument_driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE_ARGUMENT,
                  driving_log_val=CONF.PATH.SIMULATOR_STEERING_ANGLE_VAL,
                  batch_size=CONF.datamodule.batch_size,
                  train_val_split=CONF.datamodule.train_val_split,
                  transform=jpg_to_tensor):
         
         super().__init__()
-        self.driving_log = driving_log
+        self.argument_driving_log = argument_driving_log
         self.driving_log_val = driving_log_val
 
         self.batch_size = batch_size
@@ -22,7 +22,8 @@ class SimulatorDataModule(pl.LightningDataModule):
         self.transform = transform
 
     def setup(self, stage=None):
-        self.train_dataset = SimulatorDataset(self.driving_log, transform=self.transform)
+        self.train_dataset = SimulatorDataset(argument_driving_log=self.argument_driving_log,
+                                              transform=self.transform)
         num_train = len(self.train_dataset)
         
         self.val_dataset = SimulatorDataset_Val(self.driving_log_val, transform=self.transform)
@@ -37,7 +38,7 @@ class SimulatorDataModule(pl.LightningDataModule):
         return DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=False, num_workers=32, pin_memory=True)
 
 
-data_module = SimulatorDataModule(driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE,
+data_module = SimulatorDataModule(argument_driving_log=CONF.PATH.SIMULATOR_STEERING_ANGLE_ARGUMENT,
                                   driving_log_val=CONF.PATH.SIMULATOR_STEERING_ANGLE_VAL,
                                   batch_size=CONF.datamodule.batch_size,
                                   train_val_split=CONF.datamodule.train_val_split,

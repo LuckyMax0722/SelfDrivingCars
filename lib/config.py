@@ -20,9 +20,16 @@ CONF.PATH.DATA_IMAGE_AUGMENTATION = os.path.join(CONF.PATH.DATA, "IMG_A")
 
 # Dataset
 CONF.data = EasyDict()
-CONF.data.source = 'Simulator'  # 'Download', 'Simulator'  # TODO: change this
 CONF.data.image_size_rows = 160
 CONF.data.image_size_cols = 320
+
+# Data augmentation
+CONF.data_augmentation = EasyDict()  # TODO: change the following
+CONF.data_augmentation.flip = True
+CONF.data_augmentation.translate = True
+CONF.data_augmentation.brightness = True
+CONF.data_augmentation.random_shadow = True
+CONF.data_augmentation.random_erasing = True
 
 # Data augmentation translate
 CONF.data_augmentation_translate = EasyDict()
@@ -39,9 +46,9 @@ CONF.data_augmentation_random_shadow.w_high = 0.85
 
 # Datamodule
 CONF.datamodule = EasyDict()
-CONF.datamodule.batch_size = 150
+CONF.datamodule.batch_size = 8
 CONF.datamodule.train_val_split = 0.9
 
 # Best Model
 CONF.model = EasyDict()
-CONF.model.best_model = '/data/tumdriving/SelfDrivingCars/output/model/model_Second_Track_Same.pth'  # TODO: change this
+CONF.model.best_model = '/home/jiachen/SelfDrivingCars/output/model/model_1105_01:28:17_epoch2.pth'  # TODO: change this

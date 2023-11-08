@@ -26,9 +26,20 @@ def data_pre_processing(driving_log):
     steering_angles_right = [steering_angle_right - 0.25 for steering_angle_right in steering_angles_right]
     combined_steering_angles = steering_angles_center + steering_angles_left + steering_angles_right
 
-    print('Finish loading images')
-
     return combined_images, combined_steering_angles
+
+
+def argument_data_pre_processing(argument_driving_log):
+    # argument_data_pre_processing
+    # use all three cameras' photos as the input
+    data = pd.read_csv(argument_driving_log, header=None)
+
+    images = data[0].tolist()
+    steering_angles = data[1].tolist()
+
+    print('Finish loading argument images')
+
+    return images, steering_angles
 
 
 def data_augmentation_flip(images, steering_angles):
@@ -167,11 +178,10 @@ def data_augmentation_random_shadow(images, steering_angles):
         cv.imwrite(image_path, shadow_image)
 
     images = images + shadow_images_path
+    steering_angles_temp = steering_angles
     steering_angles = steering_angles + steering_angles
 
-    print('Finish shadow images')
-
-    return images, steering_angles
+    return images, steering_angles, shadow_images_path, steering_angles_temp
 
 
 def data_augmentation_random_erasing(images, steering_angles):
@@ -199,11 +209,10 @@ def data_augmentation_random_erasing(images, steering_angles):
         erasing_image.save(image_path)
 
     images = images + erasing_images_path
+    steering_angles_temp = steering_angles
     steering_angles = steering_angles + steering_angles
 
-    print('Finish random earsing images')
-
-    return images, steering_angles
+    return images, steering_angles, erasing_images_path, steering_angles_temp
 
 
 def jpg_to_tensor(image):
