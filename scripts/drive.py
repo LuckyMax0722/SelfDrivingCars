@@ -31,12 +31,22 @@ def telemetry(sid, data):
         try:
             steering_angle = float(model(image_tensor))  # predict the steering angel based on input image
 
-            if abs(steering_angle) > 0.06:
-                throttle = 0.05
-                speed = 8
+            global speed_limit
+            if speed > speed_limit:
+                speed_limit = MIN_SPEED
             else:
-                throttle = 0.10
+                speed_limit = MAX_SPEED
+
+            throttle = 1.0 - steering_angle ** 2 - (speed/speed_limit) ** 2
+
+            '''
+            if abs(steering_angle) > 0.06:
+                throttle = 0.2
                 speed = 15
+            else:
+                throttle = 0.25
+                speed = 20
+            '''
 
             print('{} {} {}'.format(steering_angle, throttle, speed))
             send_control(steering_angle, throttle, speed)
@@ -62,6 +72,12 @@ def send_control(steering_angle, throttle, speed):
 
 
 if __name__ == '__main__':
+    # define speed
+    MAX_SPEED = 18
+    MIN_SPEED = 10
+
+    speed_limit = MAX_SPEED
+
     # load model
     model = E2EResNet()
     model.load_state_dict(torch.load(CONF.model.best_model))

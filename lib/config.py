@@ -51,4 +51,4 @@ CONF.datamodule.train_val_split = 0.9
 
 # Best Model
 CONF.model = EasyDict()
-CONF.model.best_model = '/home/jiachen/SelfDrivingCars/output/model/model_1105_01:28:17_epoch2.pth'  # TODO: change this
+CONF.model.best_model = '/home/jiachen/SelfDrivingCars/output/model/model_1105_14:15:00_epoch9.pth'  # TODO: change this
