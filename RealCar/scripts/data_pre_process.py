@@ -49,7 +49,6 @@ def copy_images_function(images, target_folder):
         target_path = os.path.join(target_folder, image_filename)
         shutil.copy(image_path, target_path)
 
-
 def copy_images(data_log):
     data = pd.read_csv(data_log, header=None)
     center_images = data[7].tolist()

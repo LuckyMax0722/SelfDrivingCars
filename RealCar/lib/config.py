@@ -18,3 +18,9 @@ CONF.PATH.DATA_CENTER_IMAGES = os.path.join(CONF.PATH.DATA, 'center_rgb')
 CONF.PATH.DATA_LEFT_IMAGES = os.path.join(CONF.PATH.DATA, 'left_rgb')
 CONF.PATH.DATA_RIGHT_IMAGES = os.path.join(CONF.PATH.DATA, 'right_rgb')
 CONF.PATH.DATA_LOG = os.path.join(CONF.PATH.DATA, 'data.csv')
+
+# Datamodule
+CONF.datamodule = EasyDict()
+CONF.datamodule.batch_size = 8
+CONF.datamodule.train_val_split = 0.1
+
