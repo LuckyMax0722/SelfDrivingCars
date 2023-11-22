@@ -8,14 +8,6 @@ import pandas as pd
 import shutil
 
 from RealCar.lib.config import CONF
-from PIL import Image
-
-
-def test(data_log):
-    data = pd.read_csv(data_log, header=None)
-    right_images = data[5].tolist()
-    img = Image.open(right_images[0])
-    img.show()
 
 
 def images_path_process(data_log):
@@ -49,6 +41,7 @@ def copy_images_function(images, target_folder):
         target_path = os.path.join(target_folder, image_filename)
         shutil.copy(image_path, target_path)
 
+
 def copy_images(data_log):
     data = pd.read_csv(data_log, header=None)
     center_images = data[7].tolist()
@@ -64,6 +57,7 @@ def copy_images(data_log):
     copy_images_function(right_images, target_right_images_folder)
 
     print("Finish copy images")
+
 
 def images_path_after_process():
     # read csv file
@@ -81,6 +75,7 @@ def images_path_after_process():
             csv_writer.writerow(row)
 
         print("Finish images path after processing")
+
 
 if __name__ == "__main__":
     # Step 1: change the image path in the data_log

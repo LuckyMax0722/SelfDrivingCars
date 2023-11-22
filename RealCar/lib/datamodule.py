@@ -8,16 +8,19 @@ from RealCar.lib.utils import jpg_to_tensor
 
 class RealCarDataModule(pl.LightningDataModule):
     def __init__(self, data_log=CONF.PATH.DATA_LOG,
+                 argument_data_log=CONF.PATH.DATA_ARGUMENTATION,
                  batch_size=CONF.datamodule.batch_size,
                  train_val_split=CONF.datamodule.train_val_split,
                  transform=jpg_to_tensor):
         super().__init__()
         self.driving_log = data_log
-        self.dataset = RealCarDataset()
+        self.argument_driving_log = argument_data_log
         self.batch_size = batch_size
         self.train_val_split = train_val_split
         self.transform = transform
         self.validation_split = CONF.datamodule.train_val_split
+
+        self.dataset = RealCarDataset(self.driving_log, self.argument_driving_log, self.transform)
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
@@ -36,6 +39,7 @@ class RealCarDataModule(pl.LightningDataModule):
 
 
 data_module = RealCarDataModule(data_log=CONF.PATH.DATA_LOG,
-                                  batch_size=CONF.datamodule.batch_size,
-                                  train_val_split=CONF.datamodule.train_val_split,
-                                  transform=jpg_to_tensor)
+                                argument_data_log=CONF.PATH.DATA_ARGUMENTATION,
+                                batch_size=CONF.datamodule.batch_size,
+                                train_val_split=CONF.datamodule.train_val_split,
+                                transform=jpg_to_tensor)
