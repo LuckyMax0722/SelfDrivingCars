@@ -9,8 +9,8 @@ This program is part of the Masterpraktikum - Simulation-Based Autonomous Drivin
 As you can see from the GIF below, the Resnet50-based self-driving model has been able to keep the car on the track for some distance, however the car eventually veers off the track.
 
 <div style="display:inline-block">
-  <img src="demo/First_Track.gif" alt="image1" width="420">
-  <img src="demo/Second_Track.gif" alt="image2" width="420">
+  <img src="demo/First_Track.gif" alt="image1" width="410">
+  <img src="demo/Second_Track.gif" alt="image2" width="410">
 </div>
 
 ## Installation
@@ -78,50 +78,9 @@ SelfDrivingCars
 ## Data augmentation
 Data augmentation is very important for this work. Since the vehicle stays straight most of the time in the simulator, which means that a large amount of data is collected with a steering angle of 0, which is not beneficial for training. Based on this, we used a large amount of data augmentation to enable the network to learn different steering angles.
 
-<div align="center">
-  <div style="display: inline-block; text-align: center; width: 30%; margin-right: 10px;">
-    <img src="demo/1.jpg" alt="Image 1" width="100%">
-    <p>Original Image</p>
-  </div>
-  
-  <div style="display: inline-block; text-align: center; width: 30%; margin-right: 10px;">
-    <img src="demo/2.jpg" alt="Image 2" width="100%">
-    <p>Flip Image</p>
-  </div>
-  
-  <div style="display: inline-block; text-align: center; width: 30%;">
-    <img src="demo/3.jpg" alt="Image 3" width="100%">
-    <p>Translate Image</p>
-  </div>
-</div>
-
-<div align="center">
-  <div style="display: inline-block; text-align: center; width: 30%; margin-right: 10px;">
-    <img src="demo/4.jpg" alt="Image 1" width="100%">
-    <p>Brightness Image</p>
-  </div>
-  
-  <div style="display: inline-block; text-align: center; width: 30%; margin-right: 10px;">
-    <img src="demo/5.jpg" alt="Image 2" width="100%">
-    <p>Random shadow Image</p>
-  </div>
-  
-  <div style="display: inline-block; text-align: center; width: 30%;">
-    <img src="demo/6.jpg" alt="Image 3" width="100%">
-    <p>Random erasing Image</p>
-  </div>
-</div>
-
-<div align="center">
-  <div style="display: inline-block; text-align: center; width: 48%; margin-right: 2%;">
-    <img src="demo/Dataset_1.png" alt="Image 1" width="100%">
-    <p>Dataset before augmentation</p>
-  </div>
-
-  <div style="display: inline-block; text-align: center; width: 48%;">
-    <img src="demo/Dataset_2.png" alt="Image 2" width="100%">
-    <p>Dataset after augmentation</p>
-  </div>
+<div style="display:inline-block">
+  <img src="demo/Dataset_1.png" alt="image1" width="410">
+  <img src="demo/Dataset_2.png" alt="image2" width="410">
 </div>
 
 ## Pretrained Models
