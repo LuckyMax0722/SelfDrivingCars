@@ -20,6 +20,12 @@ As you can see from the GIF below, the Resnet50-based self-driving model has bee
   </div>
 </div>
 
+
+<div style="display:inline-block">
+  <img src="demo/First_Track.gif" alt="image1" width="400">
+  <img src="demo/Second_Track.gif" alt="image2" width="400">
+</div>
+
 ## Installation
 1. Environment requirements
 
