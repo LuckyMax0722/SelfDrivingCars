@@ -8,22 +8,9 @@ This program is part of the Masterpraktikum - Simulation-Based Autonomous Drivin
 
 As you can see from the GIF below, the Resnet50-based self-driving model has been able to keep the car on the track for some distance, however the car eventually veers off the track.
 
-<div align="center">
-  <div style="display: inline-block; text-align: center; width: 48%; margin-right: 2%;">
-    <img src="demo/First_Track.gif" alt="Image 1" width="100%">
-    <p>First Track</p>
-  </div>
-
-  <div style="display: inline-block; text-align: center; width: 48%;">
-    <img src="demo/Second_Track.gif" alt="Image 2" width="100%">
-    <p>Second Track</p>
-  </div>
-</div>
-
-
 <div style="display:inline-block">
-  <img src="demo/First_Track.gif" alt="image1" width="400">
-  <img src="demo/Second_Track.gif" alt="image2" width="400">
+  <img src="demo/First_Track.gif" alt="image1" width="420">
+  <img src="demo/Second_Track.gif" alt="image2" width="420">
 </div>
 
 ## Installation
