@@ -6,7 +6,7 @@ This program is part of the Masterpraktikum - Simulation-Based Autonomous Drivin
 
 ## Result
 
-As you can see from the GIF below, the Resnet50-based self-driving model has been able to keep the car on the track for some distance, however the car eventually veers off the track.
+As you can see from the GIF below, the Resnet50-based self-driving model has been able to keep the car on the track.
 
 <div style="display:inline-block">
   <img src="demo/First_Track.gif" alt="image1" width="410">
