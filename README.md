@@ -6,12 +6,14 @@ This program is part of the Masterpraktikum - Simulation-Based Autonomous Drivin
 
 ## Result
 
-As you can see from the GIF below, the Resnet50-based self-driving model has been able to keep the car on the track.
+As you can see from the GIFs below, the Resnet50-based self-driving model has been able to keep the car on the track.
 
 <div style="display:inline-block">
   <img src="demo/First_Track.gif" alt="image1" width="410">
   <img src="demo/Second_Track.gif" alt="image2" width="410">
 </div>
+
+All project results and reports can be found in the [demo](https://github.com/LuckyMax0722/SelfDrivingCars/tree/master/demo) folder.
 
 ## Installation
 1. Environment requirements
